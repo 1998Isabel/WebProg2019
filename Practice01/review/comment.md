@@ -1,7 +1,5 @@
-## 完成度：80%
-----
-完成index.html，也使用css做了一定程度的美編
-<br>
+## 完成度：80%  
+完成index.html，也使用css做了一定程度的美編  
 
 ## Coding quality:
 ----
