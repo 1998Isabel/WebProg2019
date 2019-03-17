@@ -1,6 +1,6 @@
 let cvsWrapper = null;
 let isOver;
-let bgImg;
+// let bgImg;
 let baseImg;
 let gmoverImg;
 // let bdImg;
@@ -12,6 +12,7 @@ let bd_x, bd_y;
 let bd_vy, a;
 let bd_rot, bd_rot_a;
 let assets = {};
+let bran;
 let bd_ram;
 let wing;
 let startflap;
@@ -21,10 +22,12 @@ let pu_x, pu_y, pd_x, pd_y;
 // assets from: https://github.com/sourabhv/FlapPyBird/tree/master/assets
 
 function preload() {
-    bgImg = loadImage("assets/sprites/background-day.png");
+    // bgImg = loadImage("assets/sprites/background-day.png");
     baseImg = loadImage("assets/sprites/base.png");
-    // bdImgDown = loadImage("assets/sprites/bluebird-downflap.png");
-    // bdImg = loadImage("assets/sprites/bluebird-downflap.png");
+    assets["background"] = ["day", "night"].map(
+            back => loadImage(`assets/sprites/background-${back}.png`)
+        );
+
     assets["bird"] = ["blue", "red", "yellow"].map(
             color => ["upflap", "midflap", "downflap"].map(
                 flap => loadImage(`assets/sprites/${color}bird-${flap}.png`)
@@ -56,11 +59,12 @@ function setup() {
     // assets.sound[0].play();
     // flapsound = setInterval( flapsound, 600);
     isOver = false;
+    bran = Math.floor(Math.random() * 2);
     x1 = 0;
     bg_v = 5;
-    bgScale = width / bgImg.width;
+    bgScale = width / assets.background[bran].width;
     baseScale = width / baseImg.width;
-    x2 = bgImg.width * bgScale;
+    x2 = assets.background[bran].width * bgScale;
     bd_x = width / 2;
     bd_y = height / 4;
     bd_vy = 0;
@@ -96,8 +100,8 @@ function draw() {
     // Render function (called per frame.)
     background(0);
     // translate(x1, y1);
-    image(bgImg, x1, 0, bgImg.width * bgScale, bgImg.height * bgScale);
-    image(bgImg, x2, 0, bgImg.width * bgScale, bgImg.height * bgScale);
+    image(assets.background[bran], x1, 0, assets.background[bran].width * bgScale, assets.background[bran].height * bgScale);
+    image(assets.background[bran], x2, 0, assets.background[bran].width * bgScale, assets.background[bran].height * bgScale);
     if (showdown) {
         image(assets.pipe[1][0], pd_x, pd_y);
         pd_x -= bg_v;
@@ -109,17 +113,17 @@ function draw() {
     image(baseImg, 0, height - baseImg.height * baseScale, baseImg.width * baseScale, baseImg.height * baseScale);
     x1 -= bg_v;
     x2 -= bg_v;
-    if (x1 < -bgImg.width * bgScale) {
+    if (x1 < -assets.background[bran].width * bgScale) {
         x1 = width - 10;
     }
-    if (x2 < -bgImg.width * bgScale) {
+    if (x2 < -assets.background[bran].width * bgScale) {
         x2 = width - 10;
     }
     // image(bdImg, bd_x, bd_y);
     if (bd_y > (height - baseImg.height * baseScale - assets.bird[bd_ram][wing].height)
         || ((pu_x < bd_x + assets.bird[bd_ram][wing].width ) && (bd_x < pu_x + assets.pipe[0][0].width)) && (bd_y < pu_y + assets.pipe[0][0].height)
         || ((pd_x < bd_x + assets.bird[bd_ram][wing].width -5) && (bd_x < pd_x + assets.pipe[1][0].width)) && (bd_y + assets.bird[bd_ram][wing].height > pd_y )
-        ){
+        || bd_y < 0){
         GameOver();
     }
     if (showup) {
@@ -149,7 +153,7 @@ function GameOver() {
     bd_rot_a = 0;
     startflap = clearInterval(startflap);
     // flapsound = clearInterval(flapsound);
-    image(gmoverImg, width/2-gmoverImg.width/2, height/3);
+    image(gmoverImg, width/2-gmoverImg.width/2, height/2.8);
 }
 
 function keyPressed() {
