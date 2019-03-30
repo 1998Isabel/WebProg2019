@@ -8,6 +8,9 @@ class TodoList extends Component {
         super(props);
         this.state = { nowState: "All", leftcount: 0}
     }
+    handleCount = (count) => {
+        this.setState({ leftcount: count});
+    }
     handleClick = (now) => {
         this.setState({ nowState: now });
         console.log("TodoList now " + this.state.nowState)
@@ -18,8 +21,9 @@ class TodoList extends Component {
                 <header className="todo-app__header">
                     <h1 className="todo-app__title">todos</h1>
                 </header>
-                <Main nowState={this.state.nowState}/>
-                <Footer nowState={this.state.nowState} count={this.state.leftcount} 
+                <Main nowState={this.state.nowState} onCount={this.handleCount}/>
+                <Footer nowState={this.state.nowState}
+                        count={this.state.leftcount} 
                         onClick={this.handleClick} />
             </div>
         );

@@ -13,6 +13,15 @@ class Main extends Component {
 		this.state = { theList: Lists, nowState: this.props.nowState };
 		//this.handleDelete = this.handleDelete.bind(this);
 	}
+	handleCount = () => {
+		let count = 0;
+		for(let i=0; i<this.state.theList.length; i++){
+			if(this.state.theList[i].itemstate===0){
+				count++;
+			}
+		}
+		this.props.onCount(count);
+	}
 	handleInput = e => {
 		if (e.key === "Enter") {
 			if (e.target.value !== "") {
@@ -22,20 +31,23 @@ class Main extends Component {
 				e.target.value = "";
 				e.target.blur();
 				this.setState({ theList: Lists });
+				this.handleCount();
 			}
 		}
 	};
 	handleComplete = (id) => {
 		Lists[id].itemstate = (Lists[id].itemstate === 1) ?  0: 1;
 		console.log(id, "completed");
-        this.setState({ theList: Lists});
+		this.setState({ theList: Lists});
+		this.handleCount();
 	};
 	handleDelete = (id) => {
 		// console.log(id);
 		// console.log(Lists);
 		Lists[id].itemstate = 2;
 		// console.log(id, "deleted");
-        this.setState({ theList: Lists});
+		this.setState({ theList: Lists});
+		this.handleCount();
     };
 	render() {
 		let toshow = (item) => {
