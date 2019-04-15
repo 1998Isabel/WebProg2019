@@ -1,0 +1,32 @@
+.wrapper {
+	width: 80%;
+	margin-top: 0px;
+	padding: 20px;
+}
+
+.info {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: baseline;
+}
+
+.title {
+	display: flex;
+	max-width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 600;
+	text-align: center;
+	
+}
+
+.author {
+	text-align: center;
+	margin-left: 10px;
+}
+
+.content {
+	font-size: 1.5em;
+}

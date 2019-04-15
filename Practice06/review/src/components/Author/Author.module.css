@@ -1,0 +1,23 @@
+.Post {
+	width: 100%;
+	text-align: left;
+	padding-left: 10%;
+	border: 1px solid #eee;
+	box-shadow: 0 2px 3px #ccc;
+	margin: 10px;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.title {
+	font-weight: 400;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	/* white-space: nowrap; */
+}
+
+.Post:hover,
+.Post:active {
+	background-color: #c0ddf5;
+}
+
