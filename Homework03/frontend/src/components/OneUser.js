@@ -4,7 +4,8 @@ import { FaRegThumbsUp } from '../../node_modules/react-icons/fa'
 import { Query, Mutation } from 'react-apollo'
 import {
   COMMENTLIST_QUERY,
-  UPDATE_POST_MUTATION
+  UPDATE_POST_MUTATION,
+  COMMENTS_SUBSCRIPTION
 } from '../graphql'
 import Comments from './Comments'
 
@@ -14,6 +15,7 @@ class OneUser extends Component {
     super(props);
     this.state = { open: false }
   }
+  
   handelclick = () => {
     let setbool = this.state.open
     if (setbool)
@@ -22,6 +24,7 @@ class OneUser extends Component {
       setbool = true
     this.setState({ open: setbool })
   }
+
   render() {
     const posts = this.props.posts
     const postnum = '' + posts.length
@@ -29,6 +32,7 @@ class OneUser extends Component {
       if (this.state.open) {
         return posts.map((post, index) => {
           const query = post.id
+          let unsubscribe = null
           return (
             <CardBody>
               <b>{post.title}</b>
@@ -43,11 +47,25 @@ class OneUser extends Component {
                   }
                   const comments = data.comments
                   const likenum = parseInt(post.like)
+                  if (!unsubscribe)
+                    unsubscribe = subscribeToMore({
+                      document: COMMENTS_SUBSCRIPTION,
+                      variables: { postId: `${query}` },
+                      updateQuery: (prev, { subscriptionData }) => {
+                        if (!subscriptionData.data) return prev
+                        const newComment = subscriptionData.data.comment.data
+                        return {
+                          ...prev,
+                          comments: [...prev.comments, newComment]
+                        }
+                      }
+                    })
+
                   return (<>
                     <hr />
-                    <Like postid={query} like={likenum} com={comments.length}/>
-                    <Comments comments={comments} />
-                    </>
+                    <Like postid={query} like={likenum} com={comments.length} />
+                    <Comments comments={comments} postid={query} />
+                  </>
                   )
                 }}
               </Query>
@@ -74,13 +92,13 @@ export default OneUser
 class Like extends Component {
   constructor(props) {
     super(props);
-    this.state={ like: '' + this.props.like, com: '' + this.props.com }
+    this.state = { like: '' + this.props.like, com: '' + this.props.com }
   }
 
   handleLike = () => {
     console.log(this.props.postid)
     const nownum = parseInt(this.state.like)
-    this.setState({like: '' + (nownum + 1)})
+    this.setState({ like: '' + (nownum + 1) })
     this.updatePost({
       variables: {
         id: this.props.postid,
@@ -96,7 +114,7 @@ class Like extends Component {
           this.updatePost = updatePost
 
           return (
-            <p><span><FaRegThumbsUp onClick={this.handleLike}/></span> {this.state.like} Likes and {this.props.com} comments!</p>
+            <p><span><FaRegThumbsUp onClick={this.handleLike} /></span> {this.state.like} Likes and {this.props.com} comments!</p>
           )
         }}
       </Mutation>

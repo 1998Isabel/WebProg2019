@@ -17,3 +17,17 @@ export const POSTS_SUBSCRIPTION = gql`
     }
   }
 `
+
+export const COMMENTS_SUBSCRIPTION = gql`
+  subscription comment($postId: ID!) {
+    comment(postId: $postId) {
+      mutation
+      data {
+        text
+        author {
+          name
+        }
+      }
+    }
+  }
+`

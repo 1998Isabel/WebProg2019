@@ -49,3 +49,23 @@ export const UPDATE_POST_MUTATION = gql`
     }
   }
 `
+export const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment(
+    $text: String!
+    $author: String!
+    $post: ID!
+  ) {
+    createComment(
+      data: {
+      text: $text
+      author: $author
+      post: $post
+    }) {
+      text
+      author {
+        name
+      }
+    }
+  }
+`
+

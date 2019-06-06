@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'reactstrap'
+import AddComment from './AddComment'
 
 
 class Comments extends Component {
@@ -27,6 +28,8 @@ class Comments extends Component {
         return (
           <div>
             {show}
+            <AddComment postid={this.props.postid}/>
+            <br />
             <Button outline color="secondary" size="sm" onClick={this.handelclick}>Don't show anymore...</Button>
           </div>
         )

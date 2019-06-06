@@ -55,7 +55,7 @@ class App extends Component {
       <Container>
         <Row>
           <Col>
-            <h1 className={classes.title}>Modern GraphQL Tutorial</h1>
+            <h1 className={classes.title}>Lite Social Media Using GraphQL</h1>
           </Col>
         </Row>
         <Row>
@@ -66,6 +66,25 @@ class App extends Component {
 
                 return (
                   <Form onSubmit={this.handleFormSubmit}>
+                    <FormGroup row>
+                      <Label for="author" sm={2}>
+                        Author
+                      </Label>
+                      <Col sm={10}>
+                        <Input
+                          name="author"
+                          type="select"
+                          value={this.state.formAuthor}
+                          id="author"
+                          defaultValue=""
+                          onChange={e => {
+                            this.setState({ formAuthor: e.target.value })}
+                          }>
+                          <option value="" selected disabled hidden>Choose user...</option>
+                          <Select />
+                        </Input>
+                      </Col>
+                    </FormGroup>
                     <FormGroup row>
                       <Label for="title" sm={2}>
                         Title
@@ -82,25 +101,7 @@ class App extends Component {
                         />
                       </Col>
                     </FormGroup>
-                    <FormGroup row>
-                      <Label for="author" sm={2}>
-                        Author
-                      </Label>
-                      <Col sm={10}>
-                        <Input
-                          name="author"
-                          type="select"
-                          value={this.state.formAuthor}
-                          id="author"
-                          placeholder="Post Author..."
-                          onChange={e => {
-                            this.setState({ formAuthor: e.target.value })}
-                          }>
-                          <option>choose user</option>
-                          <Select />
-                        </Input>
-                      </Col>
-                    </FormGroup>
+                    
                     <FormGroup>
                       <Label for="body">Body</Label>
                       <Input
