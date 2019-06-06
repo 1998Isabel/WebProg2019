@@ -34,7 +34,7 @@ class OneUser extends Component {
           const query = post.id
           let unsubscribe = null
           return (
-            <CardBody>
+            <CardBody >
               <b>{post.title}</b>
               <br />
               {post.body || <p style={{ opacity: 0.5 }}>No body for this post...</p>}
@@ -62,7 +62,7 @@ class OneUser extends Component {
                     })
 
                   return (<>
-                    <hr />
+                    <hr style={{ borderColor: 'rgb(165, 234, 247)'}}/>
                     <Like postid={query} like={likenum} com={comments.length} />
                     <Comments comments={comments} postid={query} />
                   </>
@@ -76,10 +76,10 @@ class OneUser extends Component {
     }
 
     return (
-      <Card style={{ margin: '20px auto', width: '540px' }}>
-        <CardHeader onClick={this.handelclick}>{this.props.name}</CardHeader>
+      <Card style={{ margin: '20px auto', width: '540px', borderColor: 'rgb(165, 234, 247)' }}>
+        <CardHeader onClick={this.handelclick} style={{ backgroundColor: 'rgb(165, 234, 247)' }}>{this.props.name}</CardHeader>
         {postbody()}
-        <CardFooter>{`Num of Posts: ${postnum}`}</CardFooter>
+        <CardFooter style={{ borderColor: 'rgb(165, 234, 247)'}}>{`Num of Posts: ${postnum}`}</CardFooter>
       </Card>
     )
   }

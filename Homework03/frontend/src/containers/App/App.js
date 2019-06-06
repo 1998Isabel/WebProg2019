@@ -79,7 +79,8 @@ class App extends Component {
                           defaultValue=""
                           onChange={e => {
                             this.setState({ formAuthor: e.target.value })}
-                          }>
+                          }
+                          style={{ borderColor: 'rgb(6, 155, 185)'}}>
                           <option value="" selected disabled hidden>Choose user...</option>
                           <Select />
                         </Input>
@@ -98,6 +99,7 @@ class App extends Component {
                           onChange={e =>
                             this.setState({ formTitle: e.target.value })
                           }
+                          style={{ borderColor: 'rgb(6, 155, 185)'}}
                         />
                       </Col>
                     </FormGroup>
@@ -113,9 +115,10 @@ class App extends Component {
                         onChange={e =>
                           this.setState({ formBody: e.target.value })
                         }
+                        style={{ borderColor: 'rgb(6, 155, 185)'}}
                       />
                     </FormGroup>
-                    <Button type="submit" color="primary">
+                    <Button type="submit" style={{ backgroundColor: 'rgb(6, 155, 185)', borderColor: 'rgb(6, 155, 185)' }} >
                       Post!
                     </Button>
                   </Form>
